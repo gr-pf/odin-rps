@@ -24,14 +24,26 @@ function playRound(humanChoice, computerChoice) {
     (humanChoice === "scissors" && computerChoice === "paper")
   ) {
     humanScore++;
-    console.log("You Win !");
+    console.log("You Win this round!");
   } else {
     computerScore++;
-    console.log("You Lose !");
+    console.log("You Lose this round!");
   }
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+function playGame() {
+  playRound(getHumanChoice(), getComputerChoice());
+  playRound(getHumanChoice(), getComputerChoice());
+  playRound(getHumanChoice(), getComputerChoice());
+  playRound(getHumanChoice(), getComputerChoice());
+  playRound(getHumanChoice(), getComputerChoice());
+  if (humanScore === computerScore) {
+    console.log("Game ends on a tie...");
+  } else if (humanScore > computerScore) {
+    console.log("Yeah! You win the game!");
+  } else {
+    console.log("No... You lose the game :(");
+  }
+}
 
-playRound(humanSelection, computerSelection);
+playGame();
