@@ -1,49 +1,57 @@
-const rpsChoices = ["Rock", "Paper", "Scissors"];
+const rpsChoices = ["rock", "paper", "scissors"];
 
 let humanScore = 0;
 let computerScore = 0;
+let roundCounter = 0;
 
 function getComputerChoice() {
   return rpsChoices[Math.floor(Math.random() * 3)];
 }
 
-function getHumanChoice() {
-  let userChoice = prompt("Choose between rock, paper and scissors");
-  return userChoice;
-}
-
-function playRound(humanChoice, computerChoice) {
-  humanChoice = humanChoice.toLowerCase();
-  computerChoice = computerChoice.toLowerCase();
-
-  if (humanChoice === computerChoice) {
-    console.log("It's a tie !");
-  } else if (
-    (humanChoice === "rock" && computerChoice === "scissors") ||
-    (humanChoice === "paper" && computerChoice === "rock") ||
-    (humanChoice === "scissors" && computerChoice === "paper")
-  ) {
-    humanScore++;
-    console.log("You Win this round!");
+function evaluateRound(choice1, choice2) {
+  if (!(rpsChoices.includes(choice1) && rpsChoices.includes(choice1))) {
+    return "Invalid choice";
   } else {
-    computerScore++;
-    console.log("You Lose this round!");
+    const index1 = rpsChoices.indexOf(choice1);
+    const index2 = rpsChoices.indexOf(choice2);
+
+    switch (index1 - index2) {
+      case -1:
+      case 2:
+        return "Lose";
+
+      case 0:
+        return "Tie";
+
+      case 1:
+      case -2:
+        return "Win";
+    }
   }
 }
 
-function playGame() {
-  playRound(getHumanChoice(), getComputerChoice());
-  playRound(getHumanChoice(), getComputerChoice());
-  playRound(getHumanChoice(), getComputerChoice());
-  playRound(getHumanChoice(), getComputerChoice());
-  playRound(getHumanChoice(), getComputerChoice());
-  if (humanScore === computerScore) {
-    console.log("Game ends on a tie...");
-  } else if (humanScore > computerScore) {
-    console.log("Yeah! You win the game!");
-  } else {
-    console.log("No... You lose the game :(");
+function playRound(event) {
+  const humanChoice = event.target.innerText.toLowerCase();
+  const computerChoice = getComputerChoice();
+
+  const resultRound = evaluateRound(humanChoice, computerChoice);
+
+  switch (resultRound) {
+    case "Win":
+      humanScore++;
+      document.querySelector("#player-score p").innerText = humanScore;
+      break;
+
+    case "Lose":
+      computerScore++;
+      document.querySelector("#computer-score p").innerText = computerScore;
+      break;
   }
+  roundCounter++;
+  document.querySelector("#rounds p").innerText = roundCounter;
 }
 
-playGame();
+const buttons = document.querySelectorAll("button");
+const rockButton = document.querySelector("#rock");
+
+buttons.forEach(() => addEventListener("click", playRound));
