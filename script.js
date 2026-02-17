@@ -33,6 +33,7 @@ function evaluateRound(choice1, choice2) {
 function playRound(event) {
   const humanChoice = event.target.innerText.toLowerCase();
   const computerChoice = getComputerChoice();
+  let infoText;
 
   const resultRound = evaluateRound(humanChoice, computerChoice);
 
@@ -40,15 +41,26 @@ function playRound(event) {
     case "Win":
       humanScore++;
       document.querySelector("#player-score p").innerText = humanScore;
+      infoText = "Victoire ! Vous avez remporté le round !";
       break;
 
     case "Lose":
       computerScore++;
       document.querySelector("#computer-score p").innerText = computerScore;
+      infoText = "Défaite... Vous avez perdu le round :(";
+      break;
+
+    case "Tie":
+      infoText =
+        "C'est une égalité ! Jouez un nouveau round pour vous départagez !";
       break;
   }
   roundCounter++;
   document.querySelector("#rounds p").innerText = roundCounter;
+
+  const roundDescription = document.createElement("p");
+  roundDescription.innerText = `Round #${roundCounter} ` + infoText;
+  document.querySelector(".rounds-history").appendChild(roundDescription);
 }
 
 const buttons = document.querySelectorAll("button");
