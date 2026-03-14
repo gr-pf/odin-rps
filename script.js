@@ -66,4 +66,4 @@ function playRound(event) {
 const buttons = document.querySelectorAll("button");
 const rockButton = document.querySelector("#rock");
 
-buttons.forEach(() => addEventListener("click", playRound));
+buttons.forEach((btn) => btn.addEventListener("click", playRound));
