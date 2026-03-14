@@ -1,2 +1,2 @@
 # odin-rps
-A console based rps (Rock Paper Scissors) game
+#3 TOP Project - A console based rps (Rock Paper Scissors) game
